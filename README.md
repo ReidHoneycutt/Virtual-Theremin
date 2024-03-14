@@ -3,5 +3,7 @@ This is a computer instrument which mimics the behavior of the *theremin* using 
 
 
 
-https://github.com/ReidHoneycutt/Virtual-Theremin/assets/30945205/2e0632a8-1919-41d8-962b-6c221882b409
+
+
+https://github.com/ReidHoneycutt/Virtual-Theremin/assets/30945205/8fffe2c8-a916-4e79-950e-43f370a2099d
 
