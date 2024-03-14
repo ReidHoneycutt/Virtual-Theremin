@@ -7,5 +7,7 @@ This is a computer instrument which mimics the behavior of the *theremin* using 
 
 
 
-https://github.com/ReidHoneycutt/Virtual-Theremin/assets/30945205/4cc3b297-fa4f-4d96-9048-f15462309d2f
+
+
+https://github.com/ReidHoneycutt/Virtual-Theremin/assets/30945205/8a6493f5-f41d-48bd-8274-f125613452c3
 
