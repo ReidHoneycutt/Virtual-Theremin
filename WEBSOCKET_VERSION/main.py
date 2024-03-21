@@ -1,52 +1,31 @@
+# This is the server class code you provided, saved in websocket_server.py
 import asyncio
-from server import SimpleWebSocketServer  # Ensure this module exists and is correct
-import cv2
-import pyautogui
-from cvzone.HandTrackingModule import HandDetector
+import websockets
 
+class SimpleWebSocketServer:
+    def __init__(self, host, port):
+        self.host = host
+        self.port = port
+        self.client = None
 
-def init_cap():
-    cap = cv2.VideoCapture(1)
-    cap.set(3, 1920)  # Set capture width
-    cap.set(4, 1080)  # Set capture height
-    return cap
+    async def handle_client(self, websocket, path):
+        self.client = websocket
+        try:
+            async for message in websocket:
+                print(f"Received message from client: {message}")
+                await self.send(f"Echo: {message}")
+        except websockets.ConnectionClosed:
+            print("Client has disconnected.")
+        finally:
+            self.client = None
 
+    async def send(self, message):
+        if self.client:
+            await self.client.send(message)
+        else:
+            print("No client is connected.")
 
-def init_detector():
-    detector = HandDetector(detectionCon=0.8, maxHands=2)
-    return detector
-
-
-async def move_cursor_and_send(cap, detector, server):
-    screenWidth, screenHeight = pyautogui.size()
-    while True:
-        success, img = cap.read()
-        hands, img = detector.findHands(img)
-        if hands:
-            # hand 1
-            x = (hands[0]["lmList"][8][0] * screenWidth / 1920)
-            y = (hands[0]["lmList"][8][1] * screenHeight / 1080)
-            # hand 2
-            x2 = (hands[1]["lmList"][8][0] * screenWidth / 1920)
-            y2 = (hands[1]["lmList"][8][1] * screenHeight / 1080)
-            if server.client:  # Check if a client is connected
-                await server.send(f"{x}@{y}")
-            else:
-                print("Waiting for a client to connect...")
-        await asyncio.sleep(0.1)  # Slight delay to limit message rate
-
-
-async def main():
-    server = SimpleWebSocketServer('127.0.0.1', 8080)
-    cap = init_cap()
-    detector = init_detector()
-
-    # Start server and move_cursor_and_send as tasks
-    server_task = asyncio.create_task(server.start_server())
-    cursor_task = asyncio.create_task(move_cursor_and_send(cap, detector, server))
-
-    await asyncio.gather(server_task, cursor_task)
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+    async def start_server(self):
+        async with websockets.serve(self.handle_client, self.host, self.port):
+            print(f"Server started at ws://{self.host}:{self.port}")
+            await asyncio.Future()  # Run forever
