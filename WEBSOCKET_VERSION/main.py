@@ -6,7 +6,7 @@ from cvzone.HandTrackingModule import HandDetector
 
 
 def init_cap():
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
     cap.set(3, 1920)  # Set capture width
     cap.set(4, 1080)  # Set capture height
     return cap
