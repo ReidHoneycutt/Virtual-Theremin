@@ -13,7 +13,8 @@ def init_cap():
 
 
 def init_detector():
-    detector = HandDetector(detectionCon=0.8, maxHands=1)
+    # set maxHands = 2 to search for 2 hands
+    detector = HandDetector(detectionCon=0.8, maxHands=2)
     return detector
 
 
