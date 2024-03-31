@@ -17,7 +17,7 @@ function setup() {
 	osc = new p5.Oscillator('sine');
 	osc.start();
 	arr = getScale(root, 'minor');
-	//showScale();
+	showScale();
 }
 
 const socket = new WebSocket("ws://127.0.0.1:8080");
@@ -32,7 +32,6 @@ socket.addEventListener('open', function (event) {
 });
 
 socket.addEventListener('message', function (event) {
-    //coors = event.data.split(":"); // "{}@{}:{}@{}:{}@{}" ---> [{}@{}, {}@{}]"
 	msg = event.data.split(":");
 	hand1 = msg[0].split("@");
 	hand2 = msg[1].split("@");
@@ -68,16 +67,3 @@ function draw() {
 	osc.amp(volume_param, 0.5);
 	// }
 }
-
-// function mousePressed() {
-// 	osc.start();
-// 	osc.amp(0.8, 0.5);
-// 	playing = true;
-// }
-
-// function mouseReleased() {
-// 	osc.amp(0, 0.5);
-// 	osc.stop();
-// 	playing = false;
-// }
-
