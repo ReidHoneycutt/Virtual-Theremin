@@ -49,11 +49,10 @@ function draw() {
 	let min = 100000;
 	if (frameCount % 10 == 0) {
 		background(255);
-		//showScale();
+		showScale();
 	}
 	ellipse(new_W - X1, Y1, 20, 20);
 	ellipse(new_W - X2, Y2, 20, 20);
-	// if (playing) {
 	param = map(new_W - X1, 0, new_W, root, 2 * root);
 	for (let i = 0; i < arr.length; i++) {
 		if (Math.abs(arr[i] - param) < min) {
@@ -65,5 +64,4 @@ function draw() {
 	volume_param = map(H - Y2, 0, H, 0, 1)
 	osc.freq(param, 0.1);
 	osc.amp(volume_param, 0.5);
-	// }
 }
